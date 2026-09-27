@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff8ea" />
+    <meta name="description" content="Una forma visual y divertida de aprender la hora en familia." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <title>La hora, paso a paso</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Ir al inicio">
+          <span class="brand-mark" aria-hidden="true">⏱</span>
+          <span>La hora,<br /><strong>paso a paso</strong></span>
+        </a>
+        <div class="topbar-actions">
+          <div class="star-counter" aria-label="Estrellas conseguidas"><span aria-hidden="true">★</span> <strong id="starCount">0</strong></div>
+          <button class="header-button install-button" id="installButton" type="button" aria-label="Instalar aplicación"><span aria-hidden="true">↓</span><span class="header-button-label"> Instalar</span></button>
+          <button class="header-button" id="settingsButton" type="button" aria-label="Abrir personalización"><span aria-hidden="true">⚙</span></button>
+          <button class="sound-button" id="soundButton" type="button" aria-pressed="true" aria-label="Desactivar sonido"><span aria-hidden="true">♪</span></button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="pageTitle">
+          <p class="eyebrow">APRENDER JUGANDO</p>
+          <div class="hero-character" id="heroCharacter" aria-hidden="true">🦉</div>
+          <h1 id="pageTitle">¿Qué hora es<span id="nameGreeting">?</span></h1>
+          <p class="hero-copy">Mueve las agujas, descubre los cuartos<br class="desktop-only" /> y aprende sin prisas.</p>
+        </section>
+
+        <section class="learning-path" aria-labelledby="pathTitle">
+          <div class="path-heading">
+            <div>
+              <p class="eyebrow">TU CAMINO</p>
+              <h2 id="pathTitle">Aprende paso a paso</h2>
+            </div>
+            <p id="levelProgressText">Nivel 1 · 0 de 4 estrellas</p>
+          </div>
+          <div class="level-track" id="levelTrack">
+            <button class="level-button is-current" type="button" data-level="1" aria-pressed="true"><span>1</span><strong>En punto</strong><small>Las horas</small></button>
+            <button class="level-button" type="button" data-level="2" aria-pressed="false"><span>2</span><strong>Y media</strong><small>Medio reloj</small></button>
+            <button class="level-button" type="button" data-level="3" aria-pressed="false"><span>3</span><strong>Y cuarto</strong><small>15 minutos</small></button>
+            <button class="level-button" type="button" data-level="4" aria-pressed="false"><span>4</span><strong>Menos cuarto</strong><small>La hora que viene</small></button>
+            <button class="level-button" type="button" data-level="5" aria-pressed="false"><span>5</span><strong>Gran mezcla</strong><small>Todo el reloj</small></button>
+          </div>
+        </section>
+
+        <nav class="mode-tabs" aria-label="Elige una actividad">
+          <button class="mode-tab is-active" type="button" data-mode="explore" aria-pressed="true">
+            <span aria-hidden="true">☀</span> Explora
+          </button>
+          <button class="mode-tab" type="button" data-mode="learn" aria-pressed="false">
+            <span aria-hidden="true">❤</span> Aprende
+          </button>
+          <button class="mode-tab" type="button" data-mode="practice" aria-pressed="false">
+            <span aria-hidden="true">★</span> Practica
+          </button>
+        </nav>
+
+        <section class="activity-card" id="activityCard" aria-live="polite">
+          <div class="lesson-prompt" id="lessonPrompt">
+            <span class="prompt-icon" aria-hidden="true">☝</span>
+            <div>
+              <p class="prompt-kicker" id="promptKicker">PRUEBA A MOVERLA</p>
+              <p class="prompt-text" id="promptText">Arrastra cualquiera de las dos agujas.</p>
+            </div>
+          </div>
+
+          <div class="clock-stage">
+            <div class="clock-wrap" id="clockWrap">
+              <div class="clock-zones" aria-hidden="true">
+                <span class="zone-y">Y</span>
+                <span class="zone-menos">MENOS</span>
+              </div>
+              <div class="clock" id="clock" role="group" aria-label="Reloj analógico interactivo">
+                <div class="quarter quarter-one" aria-hidden="true"></div>
+                <div class="quarter quarter-two" aria-hidden="true"></div>
+                <div class="quarter quarter-three" aria-hidden="true"></div>
+                <div class="quarter quarter-four" aria-hidden="true"></div>
+                <div class="tick-marks" id="tickMarks" aria-hidden="true"></div>
+                <div class="numbers" id="clockNumbers" aria-hidden="true"></div>
+                <button class="hand hour-hand" id="hourHand" type="button" aria-label="Aguja de la hora. Arrástrala para cambiar la hora"></button>
+                <button class="hand minute-hand" id="minuteHand" type="button" aria-label="Aguja de los minutos. Arrástrala para cambiar la hora"></button>
+                <div class="clock-pin" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="time-answer">
+              <div class="time-readout">
+                <p class="digital-time" id="digitalTime">2:45</p>
+                <button class="period-toggle" id="periodToggle" type="button" hidden>Mañana</button>
+              </div>
+              <h2 id="spokenTime">Las tres menos cuarto</h2>
+              <p class="time-hint" id="timeHint"><strong>Falta un cuarto</strong> para llegar a las tres.</p>
+            </div>
+          </div>
+
+          <div class="clock-controls" id="clockControls">
+            <button class="step-button" id="backButton" type="button" aria-label="Retroceder quince minutos">
+              <span aria-hidden="true">−</span> 15 min
+            </button>
+            <button class="hear-button" id="hearButton" type="button">
+              <span aria-hidden="true">▶</span> Escuchar
+            </button>
+            <button class="step-button" id="forwardButton" type="button" aria-label="Avanzar quince minutos">
+              15 min <span aria-hidden="true">＋</span>
+            </button>
+          </div>
+
+          <div class="lesson-steps" id="lessonSteps" hidden>
+            <div class="lesson-step-copy">
+              <p class="practice-label">PASO <span id="lessonStepNumber">1</span> DE 4</p>
+              <h2 id="lessonStepTitle">Empezamos en punto</h2>
+              <p id="lessonStepText">La aguja larga está en el 12. Todavía no ha pasado ningún cuarto.</p>
+            </div>
+            <div class="countdown-visual" id="countdownVisual" hidden>
+              <strong>15 minutos para llegar</strong>
+              <div class="countdown-dots" id="countdownDots" aria-label="Quince minutos restantes"></div>
+            </div>
+            <div class="lesson-navigation">
+              <button class="secondary-button" id="previousLessonButton" type="button">Anterior</button>
+              <div class="lesson-dots" id="lessonDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <button class="primary-button" id="nextLessonButton" type="button">Siguiente</button>
+            </div>
+          </div>
+
+          <div class="practice-panel" id="practicePanel" hidden>
+            <p class="practice-label" id="challengeKind">COLOCA LAS AGUJAS EN…</p>
+            <h2 id="challengeText">Las cinco menos cuarto</h2>
+            <button class="hear-button repeat-challenge" id="repeatChallengeButton" type="button" hidden><span aria-hidden="true">▶</span> Escuchar otra vez</button>
+            <div class="answer-options" id="answerOptions" hidden></div>
+            <div class="hour-controls" id="hourControls" aria-label="Cambiar la hora">
+              <button class="step-button" id="previousHourButton" type="button" aria-label="Retroceder una hora">− 1 hora</button>
+              <button class="step-button" id="nextHourButton" type="button" aria-label="Avanzar una hora">+ 1 hora</button>
+            </div>
+            <div class="practice-actions">
+              <button class="secondary-button" id="newChallengeButton" type="button">Otra hora</button>
+              <button class="primary-button" id="checkButton" type="button">Comprobar <span aria-hidden="true">★</span></button>
+            </div>
+            <p class="feedback" id="feedback" role="status"></p>
+          </div>
+        </section>
+
+        <section class="quarter-guide" aria-labelledby="guideTitle">
+          <div class="guide-heading">
+            <div>
+              <p class="eyebrow">EL TRUCO DEL PASTEL</p>
+              <h2 id="guideTitle">Un reloj tiene cuatro cuartos</h2>
+            </div>
+            <span class="guide-sticker" aria-hidden="true">¡15<br />min!</span>
+          </div>
+          <div class="quarter-cards">
+            <article class="quarter-card card-start" data-minutes="0" tabindex="0">
+              <span class="mini-clock" aria-hidden="true"><i style="--mini-angle: 0deg"></i></span>
+              <p>En punto</p>
+              <strong>:00</strong>
+            </article>
+            <article class="quarter-card card-quarter" data-minutes="15" tabindex="0">
+              <span class="mini-clock" aria-hidden="true"><i style="--mini-angle: 90deg"></i></span>
+              <p>Y cuarto</p>
+              <strong>:15</strong>
+            </article>
+            <article class="quarter-card card-half" data-minutes="30" tabindex="0">
+              <span class="mini-clock" aria-hidden="true"><i style="--mini-angle: 180deg"></i></span>
+              <p>Y media</p>
+              <strong>:30</strong>
+            </article>
+            <article class="quarter-card card-minus" data-minutes="45" tabindex="0">
+              <span class="mini-clock" aria-hidden="true"><i style="--mini-angle: 270deg"></i></span>
+              <p>Menos cuarto</p>
+              <strong>:45</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="reward-section" aria-labelledby="rewardTitle">
+          <div class="guide-heading">
+            <div><p class="eyebrow">TU COLECCIÓN</p><h2 id="rewardTitle">Pegatinas conseguidas</h2></div>
+            <span class="guide-sticker" aria-hidden="true">★ <span id="rewardStars">0</span></span>
+          </div>
+          <div class="reward-shelf" id="rewardShelf">
+            <div class="reward-card" data-reward="sun"><span>☀️</span><strong>Sol curioso</strong><small>3 estrellas</small></div>
+            <div class="reward-card" data-reward="cake"><span>🍰</span><strong>Pastel de cuartos</strong><small>8 estrellas</small></div>
+            <div class="reward-card" data-reward="rocket"><span>🚀</span><strong>Cohete del tiempo</strong><small>15 estrellas</small></div>
+            <div class="reward-card" data-reward="clock"><span>🏆</span><strong>Maestra del reloj</strong><small>25 estrellas</small></div>
+          </div>
+        </section>
+
+        <section class="parent-note" aria-labelledby="parentTitle">
+          <span class="parent-illustration" aria-hidden="true">↗</span>
+          <div>
+              <p class="eyebrow">PARA APRENDER JUNTOS</p>
+            <h2 id="parentTitle">Pregúntale: “¿A qué hora estamos a punto de llegar?”</h2>
+            <p id="parentTip">Cuando la aguja larga está en el 9, miramos la hora que viene. Falta un cuarto para llegar.</p>
+            <button class="secondary-button parent-toggle" id="parentToggle" type="button" aria-expanded="false">Ver progreso para adultos</button>
+            <div class="parent-dashboard" id="parentDashboard" hidden>
+              <div class="parent-stats">
+                <div><strong id="parentStars">0</strong><span>estrellas</span></div>
+                <div><strong id="parentStreak">0</strong><span>mejor racha</span></div>
+                <div><strong id="parentLevel">1</strong><span>nivel actual</span></div>
+              </div>
+              <p><strong>Recomendación:</strong> <span id="parentRecommendation">Practicar primero las horas en punto.</span></p>
+              <button class="text-button" id="resetProgressButton" type="button">Reiniciar el progreso</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>Hecho para aprender con calma <span aria-hidden="true">♥</span></footer>
+    </div>
+    <div class="celebration" id="celebration" aria-hidden="true"></div>
+    <p class="install-message" id="installMessage" role="status" hidden></p>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form method="dialog" id="settingsForm">
+        <div class="dialog-heading">
+          <div><p class="eyebrow">MI RELOJ</p><h2>Personaliza la aventura</h2></div>
+          <button class="dialog-close" type="submit" value="cancel" aria-label="Cerrar">×</button>
+        </div>
+        <label class="field-label" for="childName">¿Cómo te llamas?</label>
+        <input class="text-input" id="childName" name="childName" maxlength="18" autocomplete="off" placeholder="Tu nombre" />
+        <fieldset class="character-picker">
+          <legend>Elige un compañero</legend>
+          <label><input type="radio" name="character" value="🦉" /><span>🦉<small>Búho</small></span></label>
+          <label><input type="radio" name="character" value="🦊" /><span>🦊<small>Zorro</small></span></label>
+          <label><input type="radio" name="character" value="🐻" /><span>🐻<small>Oso</small></span></label>
+          <label><input type="radio" name="character" value="🐰" /><span>🐰<small>Conejo</small></span></label>
+        </fieldset>
+        <label class="field-label" for="colorTheme">Colores</label>
+        <select class="text-input" id="colorTheme" name="colorTheme"><option value="sunny">Cálidos</option><option value="ocean">Océano</option><option value="berry">Frambuesa</option></select>
+        <label class="field-label" for="timeFormat">Formato de hora</label>
+        <select class="text-input" id="timeFormat" name="timeFormat"><option value="12">12 horas</option><option value="24">24 horas</option></select>
+        <div class="toggle-list">
+          <label><input id="voiceSetting" type="checkbox" /> Leer las horas en voz alta</label>
+          <label><input id="hintSetting" type="checkbox" /> Mostrar pistas después de un error</label>
+          <label><input id="digitalSetting" type="checkbox" /> Mostrar la hora digital</label>
+        </div>
+        <button class="primary-button save-settings" id="saveSettingsButton" type="submit" value="save">Guardar y continuar</button>
+      </form>
+    </dialog>
+    <script src="app.js?v=5" defer></script>
+  </body>
+</html>

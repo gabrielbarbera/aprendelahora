@@ -1,0 +1,13 @@
+{
+  "name": "La hora, paso a paso",
+  "short_name": "La hora",
+  "description": "Una forma visual y divertida de aprender la hora en familia.",
+  "lang": "es",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff8ea",
+  "theme_color": "#fff8ea",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
